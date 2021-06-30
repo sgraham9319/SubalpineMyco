@@ -1,0 +1,82 @@
+seedling_id,pair_id,soil_type,treatment
+FOR_1_1,1,Forest,Experimental
+FOR_1_2,1,Forest,Experimental
+FOR_1_C,1,Forest,Control
+MEA_1_1,1,Meadow,Experimental
+MEA_1_2,1,Meadow,Experimental
+MEA_1_C,1,Meadow,Control
+MNT_1_1,1,No tree,Experimental
+MNT_1_2,1,No tree,Experimental
+MNT_1_C,1,No tree,Control
+FOR_4_2,4,Forest,Experimental
+FOR_4_3,4,Forest,Experimental
+FOR_4_C,4,Forest,Control
+MEA_4_1,4,Meadow,Experimental
+MEA_4_2,4,Meadow,Experimental
+MEA_4_C,4,Meadow,Control
+MNT_4_1,4,No tree,Experimental
+MNT_4_2,4,No tree,Experimental
+MNT_4_C,4,No tree,Control
+FOR_8_3,8,Forest,Experimental
+FOR_8_4,8,Forest,Experimental
+FOR_8_C,8,Forest,Control
+MEA_8_1,8,Meadow,Experimental
+MEA_8_2,8,Meadow,Experimental
+MEA_8_C,8,Meadow,Control
+MNT_8_1,8,No tree,Experimental
+MNT_8_2,8,No tree,Experimental
+MNT_8_C,8,No tree,Control
+FOR_9_1,9,Forest,Experimental
+FOR_9_2,9,Forest,Experimental
+FOR_9_C,9,Forest,Control
+MEA_9_1,9,Meadow,Experimental
+MEA_9_2,9,Meadow,Experimental
+MEA_9_C,9,Meadow,Control
+MNT_9_1,9,No tree,Experimental
+MNT_9_2,9,No tree,Experimental
+MNT_9_C,9,No tree,Control
+FOR_13_1,13,Forest,Experimental
+FOR_13_2,13,Forest,Experimental
+FOR_13_C,13,Forest,Control
+MEA_13_1,13,Meadow,Experimental
+MEA_13_2,13,Meadow,Experimental
+MEA_13_C,13,Meadow,Control
+MNT_13_1,13,No tree,Experimental
+MNT_13_2,13,No tree,Experimental
+MNT_13_C,13,No tree,Control
+FOR_16_1,16,Forest,Experimental
+FOR_16_2,16,Forest,Experimental
+FOR_16_C,16,Forest,Control
+MEA_16_1,16,Meadow,Experimental
+MEA_16_2,16,Meadow,Experimental
+MEA_16_C,16,Meadow,Control
+MNT_16_1,16,No tree,Experimental
+MNT_16_2,16,No tree,Experimental
+MNT_16_C,16,No tree,Control
+FOR_20_1,20,Forest,Experimental
+FOR_20_2,20,Forest,Experimental
+FOR_20_C,20,Forest,Control
+MEA_20_1,20,Meadow,Experimental
+MEA_20_2,20,Meadow,Experimental
+MEA_20_C,20,Meadow,Control
+MNT_20_1,20,No tree,Experimental
+MNT_20_2,20,No tree,Experimental
+MNT_20_C,20,No tree,Control
+FOR_23_1,23,Forest,Experimental
+FOR_23_2,23,Forest,Experimental
+FOR_23_C,23,Forest,Control
+MEA_23_1,23,Meadow,Experimental
+MEA_23_3,23,Meadow,Experimental
+MEA_23_C,23,Meadow,Control
+MNT_23_1,23,No tree,Experimental
+MNT_23_2,23,No tree,Experimental
+MNT_23_C,23,No tree,Control
+FOR_26_1,26,Forest,Experimental
+FOR_26_2,26,Forest,Experimental
+FOR_26_C,26,Forest,Control
+MEA_26_1,26,Meadow,Experimental
+MEA_26_2,26,Meadow,Experimental
+MEA_26_C,26,Meadow,Control
+MNT_26_1,26,No tree,Experimental
+MNT_26_2,26,No tree,Experimental
+MNT_26_C,26,No tree,Control
