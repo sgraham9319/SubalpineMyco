@@ -127,9 +127,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# sequence files
-Data/raw_sequence_files/*.seq
-Data/raw_sequence_files/*.ab1
-Data/raw_sequence_files/*.phd.1
-Data/cleaned_sequences/*.faa
