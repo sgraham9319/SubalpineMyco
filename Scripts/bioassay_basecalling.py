@@ -6,32 +6,11 @@ Created on Wed Mar 24 18:25:37 2021
 """
 
 import pandas as pd
-# import numpy as np
 import os
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-
-# Define function for making new base call using trace columns
-def new_call(row):
-    traces = [row['Chnl9'], row['Chnl10'], row['Chnl11'], row['Chnl12']]
-    traces.sort()
-    if traces[-2] != 0 and traces[-1]/traces[-2] < 2:
-        return 'N'
-    else:
-        if row['max_chnl'] == 'Chnl9':
-            return 'G'
-        if row['max_chnl'] == 'Chnl10':
-            return 'A'
-        if row['max_chnl'] == 'Chnl11':
-            return 'T'
-        if row['max_chnl'] == 'Chnl12':
-            return 'C'
-
-
-# Specify sequence id
-# sample = "79"
 
 # Set working directory
 os.chdir("C:\\Users\\stuart\\Documents\\SubalpineMyco\\Data\\bioassay")
@@ -94,10 +73,6 @@ for i in range(1, 90):
         # Add basecalls to trace_df
         trace_df['Basecall'] = base_call
 
-        # Make new base calls
-        trace_df['new_call'] = trace_df.apply(lambda row: new_call(row),
-                                              axis=1)
-
         # Trim first 20 bases and reset index
         trace_df = trace_df.drop(range(20)).reset_index(drop=True)
 
@@ -112,16 +87,9 @@ for i in range(1, 90):
         seq_end = trace_df.query('move_sum < 1000').index.tolist()[0]
         trace_df = trace_df.iloc[range(seq_end), ]
 
-        # Sum number of discrepancies between new and original calls
-        # sum(trace_df['Basecall'] != trace_df['new_call'])
-
-        # View discrepancies
-        # diffs = np.where(trace_df['Basecall'] != trace_df['new_call'])
-        # diffs_df = trace_df.iloc[diffs]
-
         # Write sequence to file in fasta format
-        new_seq = ''.join(list(trace_df['new_call']))
+        new_seq = ''.join(list(trace_df['Basecall']))
         test_seq = SeqRecord(Seq(new_seq), id="SampleID" + sample,
                              description="No description")
         SeqIO.write(test_seq, "annotated_sequences\\sample" + sample +
-                    "_antd.faa", "fasta")
+                    "_trim.faa", "fasta")
