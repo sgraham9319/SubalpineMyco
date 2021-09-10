@@ -3,6 +3,7 @@ library(dplyr)
 
 
 colonization <- read.csv("Data/bioassay/raw_data/pct_colonization_bioassay.csv")
+biomass <- read.csv("Data/bioassay/raw_data/biomass.csv")
 
 colonization_overlap <- colonization[c(1,18,44,55,56,57,64), c("num_myco_stuart", "num_nonmyco_stuart", "num_myco_lauren", "num_nonmyco_lauren")] 
 #extracting rows with Lauren and Stuart data
@@ -23,3 +24,27 @@ plot(x = colonization_overlap$pct_myco_stuart, y = colonization_overlap$pct_myco
 abline(a = 0, b = 1)
 treatment <- read.csv("Data/bioassay/raw_data/treatment_bioassay.csv")
 col_treat <- colonization %>% left_join(treatment)#, by = seedling_id)
+
+
+col_treat["sum_stuart"] <- rowSums(col_treat[,3:4])
+col_treat["pct_myco_staurt"] <- col_treat$num_myco_stuart / col_treat$sum_stuart *100
+
+control_test <- lm(pct_myco_staurt~treatment, data = col_treat)
+summary(control_test)
+boxplot(pct_myco_staurt ~ treatment, data = col_treat)
+
+exp_only <- col_treat %>% 
+  filter(treatment == "Experimental") 
+
+exp_test <- lm(pct_myco_staurt~soil_type, data = exp_only)
+summary(exp_test)
+boxplot(pct_myco_staurt ~ soil_type, data = exp_only)
+
+col_biomass <- col_treat %>% left_join(biomass)#, by = seedling_id)
+
+exp_biomass_only <- col_biomass %>%
+  filter(treatment == "Experimental")
+
+biomass_test <- lm(biomass_g~soil_type, data = exp_biomass_only)
+summary(biomass_test)
+boxplot(biomass_g ~ soil_type, data - exp_biomass_only)
