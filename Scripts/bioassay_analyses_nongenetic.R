@@ -62,18 +62,18 @@ col_treat <- colonization %>% left_join(treatment)#, by = seedling_id)
 col_treat["sum_stuart"] <- rowSums(col_treat[,3:4])
 
 # Create a column for percent colonization of mycorrhizae
-col_treat["pct_myco_staurt"] <- col_treat$num_myco_stuart / col_treat$sum_stuart *100
+col_treat["pct_myco_stuart"] <- col_treat$num_myco_stuart / col_treat$sum_stuart *100
 
 #==============
 # Explore Data
 #==============
 
-# Run a linear regression model to predict percent colonization by treatment type
-control_test <- lm(pct_myco_staurt~treatment, data = col_treat)
+# Run a linear regression model of percent colonization by treatment type
+control_test <- lm(pct_myco_stuart~treatment, data = col_treat)
 summary(control_test)
 
 # Plot data
-boxplot(pct_myco_staurt ~ treatment, data = col_treat, xlab = "Treatment Type", ylab = "Percent Colonization")
+boxplot(pct_myco_stuart ~ treatment, data = col_treat, xlab = "Treatment Type", ylab = "Percent Colonization")
 
 #==================================
 # Filter by Experimental Treatment
@@ -82,15 +82,15 @@ boxplot(pct_myco_staurt ~ treatment, data = col_treat, xlab = "Treatment Type", 
 exp_only <- col_treat %>% 
   filter(treatment == "Experimental") 
 
-# Run a linear regression model to predict percent colonization by soil type
-exp_test <- lm(pct_myco_staurt~soil_type, data = exp_only)
+# Run a linear regression model of percent colonization by soil type
+exp_test <- lm(pct_myco_stuart~soil_type, data = exp_only)
 summary(exp_test)
 
 # Plot Data
-boxplot(pct_myco_staurt ~ soil_type, data = exp_only, ylab ="Percent Colinzation", xlab = "Soil Type")
+boxplot(pct_myco_stuart ~ soil_type, data = exp_only, ylab ="Percent Colinzation", xlab = "Soil Type")
 
 # Check the mean for each soil type
-tapply(exp_only$pct_myco_staurt, exp_only$soil_type, FUN = mean)
+tapply(exp_only$pct_myco_stuart, exp_only$soil_type, FUN = mean)
 
 #=========================================
 # Explore Biomass Data Between Soil Types
@@ -111,23 +111,23 @@ exp_biomass_only <- col_biomass %>%
 # Explore Data
 #==============
 
-# Run a linear regression model to predict biomass by soil type
+# Run a linear regression model of biomass by treatment type
+biomass_control_test <- lm(biomass_g~treatment, data = col_biomass)
+summary(biomass_control_test)
+
+# Run a linear regression model of biomass by soil type
 biomass_test <- lm(biomass_g~soil_type, data = exp_biomass_only)
 summary(biomass_test)
 
 #Plot Data
 boxplot(biomass_g ~ soil_type, data = exp_biomass_only, xlab = "Soil Type", ylab = "Biomass (grams)")
 
-# Run a linear regression model to predict biomass by treatment type
-biomass_control_test <- lm(biomass_g~treatment, data = col_biomass)
-summary(biomass_control_test)
-
-
-fix1 <- lmer(pct_myco_staurt ~ soil_type + (1 | pair_id), REML = FALSE, data = exp_only)
+# Create linear mixed effects models of biomass by soil type
+fix1 <- lmer(pct_myco_stuart ~ soil_type + (1 | pair_id), REML = FALSE, data = exp_only)
 summary(fix1)
-fix2 <- lmer(pct_myco_staurt ~ (1 | pair_id), REML = FALSE, data = exp_only)
+fix2 <- lmer(pct_myco_stuart ~ (1 | pair_id), REML = FALSE, data = exp_only)
 summary(fix2)
 
 # Compare both models (fix1 and fix2) using likelihood ration test
 anova(fix1, fix2)
-anova(fix2, fix1)
+
