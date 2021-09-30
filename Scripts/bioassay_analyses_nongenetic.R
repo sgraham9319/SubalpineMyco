@@ -92,6 +92,15 @@ boxplot(pct_myco_stuart ~ soil_type, data = exp_only, ylab ="Percent Colinzation
 # Check the mean for each soil type
 tapply(exp_only$pct_myco_stuart, exp_only$soil_type, FUN = mean)
 
+# Create linear mixed effects models of pct colonization by soil type
+fix1 <- lmer(pct_myco_stuart ~ soil_type + (1 | pair_id), REML = FALSE, data = exp_only)
+summary(fix1)
+fix2 <- lmer(pct_myco_stuart ~ (1 | pair_id), REML = FALSE, data = exp_only)
+summary(fix2)
+
+# Compare both models (fix1 and fix2) using likelihood ration test
+anova(fix1, fix2)
+
 #=========================================
 # Explore Biomass Data Between Soil Types
 #=========================================
@@ -115,6 +124,9 @@ exp_biomass_only <- col_biomass %>%
 biomass_control_test <- lm(biomass_g~treatment, data = col_biomass)
 summary(biomass_control_test)
 
+# Plot data
+boxplot(biomass_g ~ treatment, data = col_biomass, xlab = "Treatment Type", ylab = "Biomass (g)")
+
 # Run a linear regression model of biomass by soil type
 biomass_test <- lm(biomass_g~soil_type, data = exp_biomass_only)
 summary(biomass_test)
@@ -123,11 +135,11 @@ summary(biomass_test)
 boxplot(biomass_g ~ soil_type, data = exp_biomass_only, xlab = "Soil Type", ylab = "Biomass (grams)")
 
 # Create linear mixed effects models of biomass by soil type
-fix1 <- lmer(pct_myco_stuart ~ soil_type + (1 | pair_id), REML = FALSE, data = exp_only)
-summary(fix1)
-fix2 <- lmer(pct_myco_stuart ~ (1 | pair_id), REML = FALSE, data = exp_only)
-summary(fix2)
+fix3 <- lmer(biomass_g ~ soil_type + (1 | pair_id), REML = FALSE, data = exp_biomass_only)
+summary(fix3)
+fix4 <- lmer(biomass_g ~ (1 | pair_id), REML = FALSE, data = exp_biomass_only)
+summary(fix4)
 
 # Compare both models (fix1 and fix2) using likelihood ration test
-anova(fix1, fix2)
+anova(fix3, fix4)
 
