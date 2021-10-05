@@ -143,3 +143,25 @@ summary(fix4)
 # Compare both models (fix1 and fix2) using likelihood ration test
 anova(fix3, fix4)
 
+#==============================
+# Creating plots for manuscript
+#==============================
+
+# Format data
+plot_data <- exp_only %>%
+  select(soil_type, pct_myco_stuart) %>%
+  mutate(variable = "Root-tips colonized (%)") %>%
+  rename(value = pct_myco_stuart) %>%
+  bind_rows(exp_biomass_only %>%
+              select(soil_type, biomass_g) %>%
+              mutate(variable = "Biomass (g)") %>%
+              rename(value = biomass_g)) %>%
+  mutate(soil_type = case_when(soil_type == "Meadow" ~ "Meadow w/ tree",
+                               soil_type == "No tree" ~ "Meadow w/o tree",
+                               TRUE ~ soil_type)) %>%
+  rename("Soil sampling location" = soil_type)
+
+# Create plot
+ggboxplot(plot_data, x = "Soil sampling location", y = "value",
+          fill = "Soil sampling location", facet.by = "variable",
+          scales = "free_y", ylab = "")
