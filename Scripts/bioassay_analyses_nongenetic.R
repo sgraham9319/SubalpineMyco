@@ -156,12 +156,24 @@ plot_data <- exp_only %>%
               select(soil_type, biomass_g) %>%
               mutate(variable = "Biomass (g)") %>%
               rename(value = biomass_g)) %>%
-  mutate(soil_type = case_when(soil_type == "Meadow" ~ "Meadow w/ tree",
-                               soil_type == "No tree" ~ "Meadow w/o tree",
+  mutate(soil_type = case_when(soil_type == "Meadow" ~ "Meadow\nw/ tree",
+                               soil_type == "No tree" ~ "Meadow\nw/o tree",
                                TRUE ~ soil_type)) %>%
   rename("Soil sampling location" = soil_type)
+
+# Initiate plot saving
+jpeg(filename = "Figures/bioassay_analysis.jpg",
+     type = "cairo",
+     units = "px",
+     width = 4000,
+     height = 2500,
+     pointsize = 12,
+     res = 500)
 
 # Create plot
 ggboxplot(plot_data, x = "Soil sampling location", y = "value",
           fill = "Soil sampling location", facet.by = "variable",
           scales = "free_y", ylab = "")
+
+# Save plot
+dev.off()

@@ -25,11 +25,23 @@ t.test(pct_col ~ location, data = roots, paired = T)
 plot_data <- roots %>%
   rename("Tree location" = location)
 
+# Initiate plot saving
+jpeg(filename = "Figures/mature_tree_colonization.jpg",
+     type = "cairo",
+     units = "px",
+     width = 2500,
+     height = 2500,
+     pointsize = 12,
+     res = 500)
+
 # Plot data
 ggpaired(plot_data, x = "Tree location", y = "pct_col", fill = "Tree location",
          line.color = "gray", palette = "jco",
          xlab = "Tree location", ylab = "Root-tips colonized (%)") +
   stat_compare_means(method = "t.test", paired = TRUE, label.y.npc = "bottom")
+
+# Save plot
+dev.off()
 
 # Did forest and meadow samples differ in number morphotypes?
 tapply(roots$num_morphotypes, roots$location, mean)

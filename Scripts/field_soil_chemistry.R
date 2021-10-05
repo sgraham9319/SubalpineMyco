@@ -88,9 +88,23 @@ test <- chem %>%
                                                 "Phosphate (mg/kg)",
                                                 "pH")))
 
+# Initiate plot saving
+jpeg(filename = "Figures/soil_analysis.jpg",
+     type = "cairo",
+     units = "px",
+     width = 3000,
+     height = 4000,
+     pointsize = 12,
+     res = 500)
+
 # Create plot
-p <- ggpaired(test, x = "Sample location", y = "value",
-              fill = "Sample location", line.color = "gray",
-              palette = "jco", ylab = "") +
-  stat_compare_means(method = "t.test", paired = TRUE, label.x.npc = "center")
-facet(p, facet.by = "soil_var", scales = "free_y", ncol = 2, nrow = 3)
+ggpaired(test, x = "Sample location", y = "value",
+         fill = "Sample location", line.color = "gray",
+         palette = "jco", ylab = "", facet.by = "soil_var",
+         scales = "free_y", ncol = 2, nrow = 3,
+         xlab = "Sample location") +
+  stat_compare_means(method = "t.test", paired = TRUE,
+                     label.y.npc = 0.9)
+
+# Save plot
+dev.off()
