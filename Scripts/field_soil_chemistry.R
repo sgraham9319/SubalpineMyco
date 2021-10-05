@@ -4,12 +4,14 @@
 
 # Load required packages
 library(ggpubr)
+library(dplyr)
+library(tidyr)
 
 # Create standard error function
 se <- function(x){sd(x, na.rm = T) / sqrt(length(na.omit(x)))}
 
 # Load soil chemistry data
-chem <- read.csv("../Data/field/soil_chemistry.csv")
+chem <- read.csv("Data/field/soil_chemistry.csv")
 
 # Calculate C:N ratio
 chem$cn <- chem$carbon_pct / chem$nitrogen_pct
@@ -61,3 +63,34 @@ ggpaired(chem, x = "location", y = "ph", fill = "location",
          line.color = "gray", palette = "jco",
          xlab = "Environment", ylab = "ph") +
   stat_compare_means(method = "t.test", paired = TRUE)
+
+#==============
+# Creating plot
+#==============
+
+# Put data in long format for plotting
+test <- chem %>%
+  select(location, whc_pct, cn, ph, phosphate_mgkg,
+         nitrate_mg_kg, ammonium_mg_kg) %>%
+  pivot_longer(cols = c(whc_pct, cn, ph, phosphate_mgkg,
+               nitrate_mg_kg, ammonium_mg_kg)) %>%
+  rename("Sample location" = location) %>%
+  mutate(soil_var = case_when(name == "whc_pct" ~ "Water holding capacity (%)",
+                              name == "cn" ~ "Carbon : Nitrogen",
+                              name == "ph" ~ "pH",
+                              name == "phosphate_mgkg" ~ "Phosphate (mg/kg)",
+                              name == "nitrate_mg_kg" ~ "Nitrate (mg/kg)",
+                              name == "ammonium_mg_kg" ~ "Ammonium (mg/kg)"),
+         soil_var = factor(soil_var, levels = c("Water holding capacity (%)",
+                                                "Carbon : Nitrogen",
+                                                "Nitrate (mg/kg)",
+                                                "Ammonium (mg/kg)",
+                                                "Phosphate (mg/kg)",
+                                                "pH")))
+
+# Create plot
+p <- ggpaired(test, x = "Sample location", y = "value",
+              fill = "Sample location", line.color = "gray",
+              palette = "jco", ylab = "") +
+  stat_compare_means(method = "t.test", paired = TRUE, label.x.npc = "center")
+facet(p, facet.by = "soil_var", scales = "free_y", ncol = 2, nrow = 3)
