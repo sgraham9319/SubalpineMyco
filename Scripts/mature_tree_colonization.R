@@ -30,7 +30,7 @@ jpeg(filename = "Figures/mature_tree_colonization.jpg",
      type = "cairo",
      units = "px",
      width = 2500,
-     height = 2500,
+     height = 2300,
      pointsize = 12,
      res = 500)
 
