@@ -8,6 +8,8 @@
 # Load required packages
 library(dplyr)
 library(lme4)
+library(ggplot2)
+library(ggpubr)
 
 #===========
 # Load Data
@@ -159,7 +161,7 @@ plot_data <- exp_only %>%
   mutate(soil_type = case_when(soil_type == "Meadow" ~ "Meadow\nw/ tree",
                                soil_type == "No tree" ~ "Meadow\nw/o tree",
                                TRUE ~ soil_type)) %>%
-  rename("Soil sampling location" = soil_type)
+  rename("Soil source" = soil_type)
 
 # Initiate plot saving
 jpeg(filename = "Figures/bioassay_analysis.jpg",
@@ -171,9 +173,10 @@ jpeg(filename = "Figures/bioassay_analysis.jpg",
      res = 500)
 
 # Create plot
-ggboxplot(plot_data, x = "Soil sampling location", y = "value",
-          fill = "Soil sampling location", facet.by = "variable",
-          scales = "free_y", ylab = "")
+ggboxplot(plot_data, x = "Soil source", y = "value",
+          fill = "Soil source", facet.by = "variable",
+          scales = "free_y", ylab = "") +
+  expand_limits(y = 0)
 
 # Save plot
 dev.off()
